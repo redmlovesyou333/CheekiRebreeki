@@ -16,5 +16,9 @@ namespace CheekiRebreeki.Core
         
         // A small delta to avoid floating point comparison issues with health values.
         public const float HEALTH_DELTA_THRESHOLD = 0.01f;
+
+        // --- Revive Mechanics ---
+        // NOTE: The main revive settings have been moved to PluginConfig.cs to be user-configurable.
+        public const float REVIVE_AIM_SPHERECAST_RADIUS = 0.25f; // The 'thickness' of the aim check raycast.
     }
 }

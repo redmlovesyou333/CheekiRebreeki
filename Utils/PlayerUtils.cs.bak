@@ -20,7 +20,7 @@ namespace CheekiRebreeki.Utils
             }
             
             var coopHandler = Singleton<IFikaNetworkManager>.Instance.CoopHandler;
-            if (coopHandler == null || coopHandler.Players == null)
+            if (coopHandler?.Players == null)
             {
                 return null;
             }
@@ -28,7 +28,7 @@ namespace CheekiRebreeki.Utils
             // Fika's CoopHandler.Players dictionary is not keyed by ProfileId, so we must iterate.
             foreach (var player in coopHandler.Players.Values)
             {
-                if (player != null && player.ProfileId == profileId)
+                if (player?.ProfileId == profileId)
                 {
                     return player;
                 }
@@ -57,17 +57,8 @@ namespace CheekiRebreeki.Utils
         /// </summary>
         public static string GetPlayerName(Player player)
         {
-            // This check now correctly handles "fake null" Unity objects.
-            if (player == null) return "Unknown"; 
-            
-            // Now that we know 'player' is valid, we can check its properties.
-            // Profile is a standard C# object, so using ?. and ?? on it is fine.
-            if (player.Profile != null)
-            {
-                return player.Profile.Nickname ?? player.ProfileId ?? "Unknown";
-            }
-            
-            return player.ProfileId ?? "Unknown";
+            if (player == null) return "Unknown";
+            return player.Profile?.Nickname ?? player.ProfileId ?? "Unknown";
         }
     }
 }

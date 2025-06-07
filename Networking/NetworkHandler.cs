@@ -19,6 +19,8 @@ namespace CheekiRebreeki.Networking
         public event Action<PlayerRevivedPacket> OnPlayerRevivedReceived;
         public event Action<PlayerDiedPacket> OnPlayerDiedReceived;
         public event Action<SquadWipePacket> OnSquadWipeReceived;
+        public event Action<StartRevivePacket> OnStartReviveReceived;
+        public event Action<CancelRevivePacket> OnCancelReviveReceived;
         
         public void Update()
         {
@@ -37,7 +39,7 @@ namespace CheekiRebreeki.Networking
             }
             
             _networkManager = Singleton<IFikaNetworkManager>.Instance;
-            if (_networkManager?.CoopHandler?.MyPlayer == null)
+            if (_networkManager == null || _networkManager.CoopHandler == null || _networkManager.CoopHandler.MyPlayer == null)
             {
                 Logger.LogInfo("Waiting for local player to be ready...", nameof(TryInitialize), throttleKey: "NetInit_WaitPlayer");
                 return;
@@ -54,6 +56,8 @@ namespace CheekiRebreeki.Networking
             _networkManager.RegisterPacket<PlayerRevivedPacket>(packet => OnPlayerRevivedReceived?.Invoke(packet));
             _networkManager.RegisterPacket<PlayerDiedPacket>(packet => OnPlayerDiedReceived?.Invoke(packet));
             _networkManager.RegisterPacket<SquadWipePacket>(packet => OnSquadWipeReceived?.Invoke(packet));
+            _networkManager.RegisterPacket<StartRevivePacket>(packet => OnStartReviveReceived?.Invoke(packet));
+            _networkManager.RegisterPacket<CancelRevivePacket>(packet => OnCancelReviveReceived?.Invoke(packet));
             Logger.LogInfo("Registered all network packet handlers.");
         }
         
@@ -84,6 +88,8 @@ namespace CheekiRebreeki.Networking
             OnPlayerRevivedReceived = null;
             OnPlayerDiedReceived = null;
             OnSquadWipeReceived = null;
+            OnStartReviveReceived = null;
+            OnCancelReviveReceived = null;
         }
     }
 }

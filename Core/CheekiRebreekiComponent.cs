@@ -33,9 +33,9 @@ namespace CheekiRebreeki.Core
 
         private void Update()
         {
-            // Update both raid-specific components.
-            _networkHandler?.Update();
-            _reviveManager?.Update();
+            // Update both raid-specific components safely.
+            if (_networkHandler != null) _networkHandler.Update();
+            if (_reviveManager != null) _reviveManager.Update();
         }
 
         private void OnDestroy()
@@ -49,9 +49,9 @@ namespace CheekiRebreeki.Core
                 plugin.PluginConfig.OnForceTrulyKillToggled -= _reviveManager.OnForceTrulyKillToggled;
             }
 
-            // Dispose of both components in reverse order of creation.
-            _reviveManager?.Dispose();
-            _networkHandler?.Dispose();
+            // Dispose of both components safely in reverse order of creation.
+            if (_reviveManager != null) _reviveManager.Dispose();
+            if (_networkHandler != null) _networkHandler.Dispose();
             
             CheekiRebreekiPlugin.ReviveManager = null;
             Utils.Logger.LogInfo("CheekiRebreekiGameComponent destroyed. All raid components disposed.");

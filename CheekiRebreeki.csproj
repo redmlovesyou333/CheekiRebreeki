@@ -47,6 +47,11 @@
       <HintPath>$(SPTarkovGameDir)\EscapeFromTarkov_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <!-- ADDED THIS REFERENCE FOR PHYSICS -->
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(SPTarkovGameDir)\EscapeFromTarkov_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>$(SPTarkovGameDir)\EscapeFromTarkov_Data\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
@@ -92,18 +97,24 @@
     <Compile Include="Core\Constants.cs" />
     <Compile Include="Core\DownedPlayerInfo.cs" />
     <Compile Include="Core\ReviveManager.cs" />
-    <Compile Include="Core\OnScreenTextManager.cs" />
     <Compile Include="Core\CheekiRebreekiComponent.cs" />
     
+    <!-- Core UI -->
+    <Compile Include="Core\OnScreenTextManager.cs" />
+    <Compile Include="Core\UI\ProgressBarManager.cs" />
+    <Compile Include="Core\UI\RevivePromptManager.cs" />
+
     <!-- Config -->
     <Compile Include="Config\PluginConfig.cs" />
     
     <!-- Networking -->
     <Compile Include="Networking\NetworkHandler.cs" />
+    <Compile Include="Networking\Packets\CancelRevivePacket.cs" />
     <Compile Include="Networking\Packets\PlayerDownedPacket.cs" />
     <Compile Include="Networking\Packets\PlayerRevivedPacket.cs" />
     <Compile Include="Networking\Packets\PlayerDiedPacket.cs" />
     <Compile Include="Networking\Packets\SquadWipePacket.cs" />
+    <Compile Include="Networking\Packets\StartRevivePacket.cs" />
     
     <!-- Patches -->
     <Compile Include="Patches\PatchCommons.cs" />
